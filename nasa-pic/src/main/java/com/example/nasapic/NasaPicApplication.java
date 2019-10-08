@@ -1,19 +1,21 @@
 package com.example.nasapic;
 
 import java.io.FileNotFoundException;
-import java.net.HttpURLConnection;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.example.nasapic.model.NasaResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -32,12 +34,11 @@ public class NasaPicApplication {
 		List<String> formattedDates = formatDates(cleanedDates);
 
 		// TODO: do we take in invalid dates???
-		// 3. Build api call
-		callApi(formattedDates);
+		// 3. Build & call api
+		List<NasaResponse> responses = callApi(formattedDates);
 
-		// 4. Call api
-
-		// 5. Display photos
+		// 4. Download & store photos
+		downloadPhotos(responses);
 	}
 
 	public static List<String> processFile(){
@@ -49,7 +50,6 @@ public class NasaPicApplication {
 		File file = new File(filePath);
 
 		try(Scanner scanner = new Scanner(file)){
-			int i = 0;
 			while(scanner.hasNextLine()){
 				inputList.add(scanner.nextLine());
 			}
@@ -59,6 +59,12 @@ public class NasaPicApplication {
 		return inputList;
 	}
 
+	/*
+	 * Remove commas from date
+	 *
+	 * @param List<String> dirty input date strings
+	 * @return List<String> of dates without commas
+	 * */
 	public static List<String> cleanDates(List<String> inputDates){
 		// clean strings of commas
 		List<String> cleanedDates = new ArrayList<>();
@@ -68,14 +74,12 @@ public class NasaPicApplication {
 				date = date.replaceAll(",", "");
 			}
 			cleanedDates.add(date);
-//			System.out.println(date);
 		}
 
 		return cleanedDates;
 	}
 
 	public static List<String> formatDates(List<String> cleanedDates){
-		// TODO: figure out how to do last date format
 		List<String> knownPatterns = Arrays.asList("MM/dd/yy", "M-d-yyyy", "MMMM-dd-yyyy", "MMMM d yyyy");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		List<String> formattedDates = new ArrayList<>();
@@ -99,15 +103,38 @@ public class NasaPicApplication {
 		return baseUrl + "&date=" + formattedDate + "&hd=false";
 	}
 
-	public static void callApi(List<String> formattedDates){
+	/*
+	 * Builds and executes API call
+	 *
+	 * @param List<String> formattedDates - cleaned and formatted dates
+	 * @return List<NasaResponse> response from api call
+	 * */
+	public static List<NasaResponse> callApi(List<String> formattedDates){
+		List<NasaResponse> result = new ArrayList<>();
+
 		for (String date: formattedDates) {
 
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<String> result = restTemplate.getForEntity(buildApiCall(date), String.class);
-
-			System.out.println(result);
+			result.add(restTemplate.getForObject(buildApiCall(date), NasaResponse.class));
 		}
 
+		return result;
+	}
+
+	public static void downloadPhotos(List<NasaResponse> responses){
+		Path path = Paths.get(System.getProperty("user.dir") + "/photos");
+
+		try{
+			Files.createDirectory(path);
+		} catch (IOException e) {}
+
+		for(NasaResponse response: responses){
+			try(InputStream in = new URL(response.getHdurl()).openStream()){
+				System.out.println("Getting photo for " +  response.getTitle());
+				Files.copy(in, Paths.get(path + "/" + response.getDate() + ".jpeg"));
+			} catch (MalformedURLException e){}
+			catch (IOException e){}
+		}
 	}
 
 
