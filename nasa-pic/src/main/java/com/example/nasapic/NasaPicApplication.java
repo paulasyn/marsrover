@@ -24,20 +24,15 @@ public class NasaPicApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NasaPicApplication.class, args);
 
-		// 1. Read from file
 		List<String> inputList = processFile();
 
-		// 2A. Clean Dates
 		List<String> cleanedDates = cleanDates(inputList);
 
-		// 2B. Format Dates
 		List<String> formattedDates = formatDates(cleanedDates);
 
 		// TODO: do we take in invalid dates???
-		// 3. Build & call api
 		List<NasaResponse> responses = callApi(formattedDates);
 
-		// 4. Download & store photos
 		downloadPhotos(responses);
 	}
 
