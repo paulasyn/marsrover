@@ -40,5 +40,12 @@ public class NasaPicApplicationTests {
 		Assert.assertEquals(testClass.buildApiCall(inputDate), expectedOutput);
 	}
 
+//	@Test
+//	public void testBuildApiCall(){
+//		String inputDate = "2015-10-11";
+//		String expectedOutput = "https://api.nasa.gov/planetary/apod?api_key=hXeSMClQ1QYWddQZV3tYBTCk7D3j6iieiqBrmUEB&date=2015-10-11&hd=false";
+//		Assert.assertEquals(testClass.buildApiCall(inputDate), expectedOutput);
+//	}
+
 
 }
