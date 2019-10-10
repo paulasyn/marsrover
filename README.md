@@ -9,7 +9,8 @@ Navigate to the directory within "marsrover" and open the project "nasa-pic" in 
 
 In the terminal, pull the dependencies by running `<mvn clean install>`
 
-To run unit tests, run `<mvn test>`
+To run unit tests and see code coverage, run `<mvn test>`
 
-To run the project, run `<mvn spring-boot: run>`
+To run the project, run `<mvn spring-boot:run>`
 
+After running the project, photos pulled using the NASA API can be found in `<marsrover/nasa-pic/photos>`
