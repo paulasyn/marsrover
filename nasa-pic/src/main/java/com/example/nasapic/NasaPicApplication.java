@@ -32,11 +32,11 @@ public class NasaPicApplication {
 
 		List<String> formattedDates = formatDates(cleanedDates);
 
-		// TODO: do we take in invalid dates??? Could reject those dates, but logic as is gives the next day if not found.
-		List<NasaResponse> responses = callApi(formattedDates);
-
-		downloadPhotos(responses);
-		exit(0);
+//		TODO: do we take in invalid dates??? Could reject those dates, but logic as is gives the next day if not found.
+//		List<NasaResponse> responses = callApi(formattedDates);
+//
+//		downloadPhotos(responses);
+//		exit(0);
 	}
 
 	/*
