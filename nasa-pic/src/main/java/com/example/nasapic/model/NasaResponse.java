@@ -74,8 +74,6 @@ public class NasaResponse {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    public void setUrl(String url) { this.url = url; }
 
 }
