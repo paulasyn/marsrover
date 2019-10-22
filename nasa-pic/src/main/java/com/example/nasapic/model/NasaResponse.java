@@ -1,18 +1,14 @@
 package com.example.nasapic.model;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-
 public class NasaResponse {
-    String copyright;
-    String date;
-    String explanation;
-    String hdurl;
-    String media_type;
-    String service_version;
-    String title;
-    String url;
+    private String copyright;
+    private String date;
+    private String explanation;
+    private String hdurl;
+    private String media_type;
+    private String service_version;
+    private String title;
+    private String url;
 
     public String getCopyright() {
         return copyright;
