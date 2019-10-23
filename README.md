@@ -24,10 +24,18 @@ This next part assumes that the UI is also up and running. You can find the UI a
 
 ## Application Flow
 
-I have the project setup so that when an invalid date is found in the given text file, it will throw a Parse Exception and will not send a request to the API. example: April 31, 2018 - this date will not be process, therefore must be removed from the file or changed.
+I have the project setup so that when an invalid date is found in the given text file, it will throw a Parse Exception and will not send a request to the API. example: April 31, 2018 - this date will not process, therefore it must be removed from the file or changed.
 
 In the first run to demonstrate this, I use the file `invalidFile.txt` as the input and will result in an error.
 
-In order to have the application send a request, you must navigate to `src/main/java/com/example/nasapic/impl/NasaPicApplicationImpl.java` and uncomment the line `String file = parseService.getInputFilePath("validInputFile.txt");` as well as comment out the line above it.
+In order to have the application send a request, you must navigate to 
+
+`src/main/java/com/example/nasapic/impl/NasaPicApplicationImpl.java` 
+
+and uncomment the line 
+
+`String file = parseService.getInputFilePath("validInputFile.txt");` 
+
+as well as comment out the line above it.
 
 Run the project again, click the button in the UI, and you will see the application send a request to the API.
