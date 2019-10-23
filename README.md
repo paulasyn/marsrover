@@ -20,7 +20,7 @@ To run the project, run `<mvn spring-boot:run>`
 
 The backend is now up and running.
 
-This next part assumes that the UI is also up and running. You can find the UI at `https://github.com/paulasyn/marsrover-frontend`.
+This next part assumes that the UI is also up and running. You can find the UI at <https://github.com/paulasyn/marsrover-frontend>.
 
 ## Application Flow
 
