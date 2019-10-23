@@ -31,3 +31,4 @@ build/
 .vscode/
 
 photos/
+.DS_Store

@@ -41,7 +41,7 @@ public class FormatDatesServiceImpl implements FormatDatesService {
             }
         }
         if(cleanedDates.size() != formattedDates.size()){
-            System.out.println("Some dates were removed, please check that ALL your dates are valid.");
+            System.out.println("The following dates were valid, please check that ALL your dates are valid. \nRequest was not sent.");
         }
         System.out.println(formattedDates);
         return formattedDates;

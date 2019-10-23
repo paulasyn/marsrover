@@ -43,11 +43,12 @@ public class NasaPicApplicationImpl implements NasaPicApplicationService {
 
         return dateObject.getDateString();
 
-        // TODO: take input from frontend text box
+        // TODO: working on getting input from user to start the request from a text box.
     }
 
     public List<String> getURLsFromFile() throws IllegalArgumentException {
 
+//        String file = parseService.getInputFilePath("invalidFile.txt");
         String file = parseService.getInputFilePath("validInputFile.txt");
 
         List<String> inputList = parseService.processFile(file);
