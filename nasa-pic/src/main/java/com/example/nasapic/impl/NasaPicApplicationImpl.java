@@ -48,8 +48,8 @@ public class NasaPicApplicationImpl implements NasaPicApplicationService {
 
     public List<String> getURLsFromFile() throws IllegalArgumentException {
 
-//        String file = parseService.getInputFilePath("invalidFile.txt");
-        String file = parseService.getInputFilePath("validInputFile.txt");
+        String file = parseService.getInputFilePath("invalidFile.txt");
+//        String file = parseService.getInputFilePath("validInputFile.txt");
 
         List<String> inputList = parseService.processFile(file);
 
