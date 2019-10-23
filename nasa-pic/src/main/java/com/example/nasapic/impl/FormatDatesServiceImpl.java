@@ -15,28 +15,35 @@ public class FormatDatesServiceImpl implements FormatDatesService {
     /*
      * Takes a list of clean date strings and each date string is changed into a date object that its original format closely matches
      * The date object can now be changed to the format we want
+     * If the date does not exist, it is removed from the list.
      *
      * @param List<String> - list of clean dates with no commas
      * @return List<String> - list of dates that are formatted to match the api input
      * */
     public List<String> formatDates(List<String> cleanedDates){
-
-        List<String> knownPatterns = Arrays.asList("MM/dd/yy", "M-d-yyyy", "MMMM-dd-yyyy", "MMMM d yyyy");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        formatter.setLenient(false);
+        List<String> knownPatterns = Arrays.asList("MM/dd/yy", "M-d-yyyy", "MMMM-dd-yyyy", "MMMM d yyyy");
         List<String> formattedDates = new ArrayList<>();
 
         for (String date: cleanedDates){
             for (String pattern : knownPatterns){
-                try {
-                    Date reformattedDate  = new SimpleDateFormat(pattern).parse(date);
+                try{
+                    SimpleDateFormat newFormatter = new SimpleDateFormat(pattern);
+                    newFormatter.setLenient(false);
+                    Date reformattedDate = newFormatter.parse(date);
                     formattedDates.add(formatter.format(reformattedDate));
-                    System.out.println(formatter.format(reformattedDate));
+//                    System.out.println(formatter.format(reformattedDate) + " was able to be reformatted using this pattern: " + pattern);
+                } catch (ParseException e){
 
-                } catch (ParseException e) {}
-
+//                    System.out.println("Date " + date + " is not a valid date for the format: " + pattern + ".");
+                }
             }
         }
+        if(cleanedDates.size() != formattedDates.size()){
+            System.out.println("Some dates were removed, please check that ALL your dates are valid.");
+        }
+        System.out.println(formattedDates);
         return formattedDates;
     }
 }
-

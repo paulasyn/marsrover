@@ -18,11 +18,8 @@ public class ParseServiceImpl implements ParseService {
      * @param void
      * @return List<String> - list of dates from input file
      * */
-    public List<String> processFile(){
+    public List<String> processFile(String filePath){
         // read the file and save the entries to a list
-
-        String currentDirectory = System.getProperty("user.dir");
-        String filePath = currentDirectory + "/inputFile.txt";
         List<String> inputList = new ArrayList<>();
         File file = new File(filePath);
 
@@ -34,6 +31,11 @@ public class ParseServiceImpl implements ParseService {
             System.out.println(e);
         }
         return inputList;
+    }
+
+    public String getInputFilePath(String filename){
+        String currentDirectory = System.getProperty("user.dir");
+        return currentDirectory + "/" + filename;
     }
 
 

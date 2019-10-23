@@ -15,19 +15,20 @@ public class MainController {
     @Autowired
     NasaPicApplicationService appService;
 
-    @RequestMapping("/")
-    public String home(){
-        return "Hello World!";
-    }
+//    @RequestMapping("/")
+//    public String home(){
+//        return "Hello World!";
+//    }
 
-    @RequestMapping("/getPhotoURL")
-    public String getPhotoURL(@RequestBody String jsonInput){
-        try {
-            return appService.getPhotoURLFromUI(jsonInput);
-        }catch (IllegalArgumentException e){
-            return "Error: Bad Input. Please reformat.";
-        }
-    }
+    // Was working on taking in any date input and request it from the API
+//    @RequestMapping("/getPhotoURL")
+//    public String getPhotoURL(@RequestBody String jsonInput){
+//        try {
+//            return appService.getPhotoURLFromUI(jsonInput);
+//        }catch (IllegalArgumentException e){
+//            return "Error: Bad Input. Please reformat.";
+//        }
+//    }
 
     @RequestMapping("/getURLsFromFiles")
     List<String> getURLsFromFile(){

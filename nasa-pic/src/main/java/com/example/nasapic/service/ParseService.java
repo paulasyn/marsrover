@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface ParseService {
 
-    List<String> processFile();
+    List<String> processFile(String filePath);
+    String getInputFilePath(String filename);
 
-}
+    }

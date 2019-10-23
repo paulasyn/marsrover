@@ -29,7 +29,7 @@ public class ApiServiceImpl implements ApiService {
      * @param List<String> - list of clean and formatted dates
      * @return List<NasaResponse> list of responses from API calls
      * */
-    public List<NasaResponse> callApi(List<String> formattedDates){
+    public List<NasaResponse>callApi(List<String> formattedDates){
         List<NasaResponse> result = new ArrayList<>();
 
         for (String date: formattedDates) {

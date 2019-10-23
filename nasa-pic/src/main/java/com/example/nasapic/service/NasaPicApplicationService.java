@@ -1,5 +1,6 @@
 package com.example.nasapic.service;
 
+import com.example.nasapic.model.NasaResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

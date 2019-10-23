@@ -9,10 +9,12 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class NasaPicApplicationImpl implements NasaPicApplicationService {
+
     @Autowired
     ParseService parseService;
 
@@ -29,19 +31,26 @@ public class NasaPicApplicationImpl implements NasaPicApplicationService {
     DownloadService downloadService;
 
     public String getPhotoURLFromUI(String jsonInput) throws IllegalArgumentException{
-
         JsonObject jsonObject = new JsonParser().parse(jsonInput).getAsJsonObject();
+
         String jsonDate = jsonObject.get("Date").getAsString();
+
         InputDate dateObject = new InputDate();
+
         dateObject.setDate(jsonDate);
+
         System.out.println(dateObject.getDateString());
+
         return dateObject.getDateString();
 
         // TODO: take input from frontend text box
     }
 
     public List<String> getURLsFromFile() throws IllegalArgumentException {
-        List<String> inputList = parseService.processFile();
+
+        String file = parseService.getInputFilePath("validInputFile.txt");
+
+        List<String> inputList = parseService.processFile(file);
 
         List<String> cleanedDates = dateCleaningService.cleanDates(inputList);
 
@@ -53,8 +62,13 @@ public class NasaPicApplicationImpl implements NasaPicApplicationService {
 
         downloadService.downloadPhotos(responses);
 
-        return formattedDates;
+        List<String> photoURLs = new ArrayList<>();
+        for(NasaResponse response: responses){
+            photoURLs.add(response.getHdurl());
+        }
+        System.out.println(photoURLs);
+        return photoURLs;
 
-        // TODO: Test cases for controller
+
     }
 }
